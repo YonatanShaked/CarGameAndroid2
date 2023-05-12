@@ -293,16 +293,14 @@ public class MainActivity extends AppCompatActivity implements Constants {
             Intent myIntent = new Intent(activity, GameOverActivity.class);
             Bundle bundle = new Bundle();
 
-            bundle.putString(GameOverActivity.EXTRA_KEY_DISTANCE,""+gameManager.getDistance());
-            bundle.putString(GameOverActivity.EXTRA_KEY_SCORE,""+gameManager.getCoin());
-            bundle.putString(GameOverActivity.EXTRA_KEY_TOP,""+gameManager.getCurrentTopPos());
-            myIntent.putExtra(getString(R.string.gameoverBundle),bundle);
+            bundle.putString(GameOverActivity.EXTRA_KEY_DISTANCE, "" + gameManager.getDistance());
+            bundle.putString(GameOverActivity.EXTRA_KEY_SCORE, "" + gameManager.getCoin());
+            bundle.putString(GameOverActivity.EXTRA_KEY_TOP, "" + gameManager.getCurrentTopPos());
+            myIntent.putExtra(getString(R.string.gameoverBundle), bundle);
             startActivity(myIntent);
             finish();
         }, DELAY_ACTIVITY);
     }
-
-
 
     private void randomCreateSign() {
         gameManager.randomSignOnRoads();

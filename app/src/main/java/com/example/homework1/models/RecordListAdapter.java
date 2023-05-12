@@ -66,7 +66,7 @@ public class RecordListAdapter extends ArrayAdapter<Record> {
         lastPosition = position;
         String dateFormat = DateFormat.format("dd.MM.yy\nHH:mm:ss", date).toString();
         holder.distance.setText("Distance: " + distance + " m");
-        holder.date.setText("Date: " +dateFormat);
+        holder.date.setText("Date: " + dateFormat);
         holder.score.setText("Score: " + score);
         holder.rank.setText((position + 1) + ".");
         return convertView;

@@ -72,10 +72,10 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         Bundle bundle = new Bundle();
         CarPosition myPosition = new CarPosition(theLocation.getLatitude(), theLocation.getLongitude());
         String positionJson = new Gson().toJson(myPosition);
-        bundle.putString(MainActivity.SENSOR_TYPE,sensor);
-        bundle.putString(MainActivity.NAME,"sensor");
+        bundle.putString(MainActivity.SENSOR_TYPE, sensor);
+        bundle.putString(MainActivity.NAME, "sensor");
         bundle.putString(MainActivity.EXTRA_KEY_GAME, positionJson);
-        intent.putExtra(getString(R.string.bundle),bundle);
+        intent.putExtra(getString(R.string.bundle), bundle);
         startActivity(intent);
         finish();
     }
@@ -183,9 +183,9 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
     private void askLocationPermission() {
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)) {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             } else {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_FINE_LOCATION}, LOCATION_REQUEST_CODE);
             }
         }
     }

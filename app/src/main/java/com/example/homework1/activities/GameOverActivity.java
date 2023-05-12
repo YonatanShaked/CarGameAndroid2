@@ -29,8 +29,8 @@ public class GameOverActivity extends AppCompatActivity implements Constants {
         gameOver_LBL_Score.setText(getIntent().getBundleExtra(getString(R.string.gameoverBundle)).getString(EXTRA_KEY_SCORE));
         String rating = getIntent().getBundleExtra(getString(R.string.gameoverBundle)).getString(EXTRA_KEY_TOP);
 
-        if(!rating.equals("-1"))
-            gameOver_LBL_Rating.setText("You took "+rating+" place");
+        if (!rating.equals("-1"))
+            gameOver_LBL_Rating.setText("You took " + rating + " place");
 
         gameOver_BTN_topTen.setOnClickListener(v -> openTopTenActivity(GameOverActivity.this));
         gameOver_BTN_menu.setOnClickListener(v -> closeActivity(GameOverActivity.this));
