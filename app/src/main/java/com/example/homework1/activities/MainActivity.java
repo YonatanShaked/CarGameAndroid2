@@ -37,35 +37,23 @@ import java.util.concurrent.TimeUnit;
 public class MainActivity extends AppCompatActivity implements Constants {
     private ImageButton main_BTN_right;
     private ImageButton main_BTN_left;
-
     private ImageView[] main_IMG_car_arr;
     private ImageView[] main_IMG_heart_arr;
     private ImageView[] main_IMG_sign_arr;
-
     private TextView main_Text_distance_counter;
     private TextView main_Text_count_coins;
-
-
     private LinearLayout main_LAY_car;
-
     private GameManager gameManager;
-
     private ScheduledFuture<?> scheduledFuture;
-
     private final Handler timerHandler = new Handler();
-
     private MusicPlayer mp;
     private SP sp;
     private Gson gson;
     private float startPosZ;
-
     private long startTime = 0;
-
-
     private SensorManager sensorManager;
     private Sensor sensor;
-    String sensorType;
-
+    private String sensorType;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
