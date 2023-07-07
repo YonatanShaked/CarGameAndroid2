@@ -9,15 +9,15 @@ import android.content.pm.PackageManager;
 import android.location.Location;
 import android.os.Bundle;
 import android.os.Looper;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
-import com.example.homework1.interfaces.Constants;
-import com.example.homework1.models.CarPosition;
 import com.example.homework1.R;
+import com.example.homework1.interfaces.Constants;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -29,7 +29,6 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
-import com.google.gson.Gson;
 
 public class GameMenuActivity extends AppCompatActivity implements Constants {
     private Location theLocation;
@@ -59,7 +58,7 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         MaterialButton menu_BTN_accelerometer = findViewById(R.id.menu_BTN_accelerometer);
         MaterialButton menu_BTN_light = findViewById(R.id.menu_BTN_light);
         MaterialButton menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
-        menu_BTN_accelerometer.setOnClickListener(v -> startGame("ACC"));
+        menu_BTN_accelerometer.setOnClickListener(v -> startAR());
         menu_BTN_light.setOnClickListener(v -> startAR());
 
         menu_BTN_topTen.setOnClickListener(v -> openTopTenActivity(GameMenuActivity.this));
@@ -68,22 +67,9 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
 
     private void startAR()
     {
+        Log.d("MENU", "startAR: " + theLocation);
         Intent myIntent = new Intent(this, HelloArActivity.class);
         startActivity(myIntent);
-        finish();
-    }
-
-    private void startGame(String sensor) {
-
-        Intent intent = new Intent(this, MainActivity.class);
-        Bundle bundle = new Bundle();
-        CarPosition myPosition = new CarPosition(theLocation.getLatitude(), theLocation.getLongitude());
-        String positionJson = new Gson().toJson(myPosition);
-        bundle.putString(MainActivity.SENSOR_TYPE, sensor);
-        bundle.putString(MainActivity.NAME, "sensor");
-        bundle.putString(MainActivity.EXTRA_KEY_GAME, positionJson);
-        intent.putExtra(getString(R.string.bundle), bundle);
-        startActivity(intent);
         finish();
     }
 
