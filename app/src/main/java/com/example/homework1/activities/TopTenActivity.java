@@ -7,13 +7,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.example.homework1.R;
 import com.example.homework1.fragments.FragmentMap;
 import com.example.homework1.fragments.FragmentTrainer;
-import com.example.homework1.models.TopTen;
 import com.example.homework1.models.Trainer;
-import com.example.homework1.utils.SP;
-import com.google.gson.Gson;
 
 public class TopTenActivity extends AppCompatActivity {
-    private TopTen topTen;
     private Trainer trainer;
 
     @Override
@@ -25,12 +21,6 @@ public class TopTenActivity extends AppCompatActivity {
         trainer.setName("Moshe");
         trainer.setAfekaMons(3);
 
-        topTen = null;
-        String ttJson = SP.getInstance().getString(SP.KEY_TOP_TEN, "NA");
-        if (!ttJson.equals("NA")) {
-            topTen = new Gson().fromJson(ttJson, TopTen.class);
-        }
-
         initViews();
 
     }
@@ -39,7 +29,7 @@ public class TopTenActivity extends AppCompatActivity {
         FragmentTrainer fragmentTrainer = new FragmentTrainer(trainer);
         getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragmentTrainer).commit();
 
-        FragmentMap fragmentMap = new FragmentMap(topTen);
+        FragmentMap fragmentMap = new FragmentMap(null);
         getSupportFragmentManager().beginTransaction().replace(R.id.topTen_LAY_map, fragmentMap).commit();
     }
 
