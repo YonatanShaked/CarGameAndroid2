@@ -17,10 +17,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class FragmentTrainer extends Fragment {
+    private String trainerName;
     private MaterialTextView trainer_name;
     private MaterialTextView trainer_caught;
 
-    public FragmentTrainer() {
+    public FragmentTrainer(String trainerName) {
+        this.trainerName = trainerName;
     }
 
     @Override
@@ -34,9 +36,8 @@ public class FragmentTrainer extends Fragment {
     private void initViews() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference trainersRef = db.getReference("trainers");
-        String userId = "Moshe";
 
-        trainersRef.orderByChild("name").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        trainersRef.orderByChild("name").equalTo(trainerName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){

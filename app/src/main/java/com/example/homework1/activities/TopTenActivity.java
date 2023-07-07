@@ -22,7 +22,7 @@ public class TopTenActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        FragmentTrainer fragmentTrainer = new FragmentTrainer();
+        FragmentTrainer fragmentTrainer = new FragmentTrainer(getIntent().getExtras().getString("trainer"));
         getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragmentTrainer).commit();
 
         FragmentMap fragmentMap = new FragmentMap();

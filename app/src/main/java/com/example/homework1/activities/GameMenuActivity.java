@@ -86,6 +86,7 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         mediaPlayer.stop();
         mediaPlayer.release();
         Intent myIntent = new Intent(activity, TopTenActivity.class);
+        myIntent.putExtra("trainer", getIntent().getExtras().getString("trainer"));
         startActivity(myIntent);
     }
 

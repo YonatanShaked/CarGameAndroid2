@@ -18,6 +18,7 @@ import com.google.firebase.auth.FirebaseUser;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Objects;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -37,7 +38,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void moveToMainActivity(FirebaseUser user) {
         Intent intent = new Intent(this, GameMenuActivity.class);
-        intent.putExtra("username", user.getEmail());
+        intent.putExtra("trainer", Objects.requireNonNull(user.getEmail()).split("@")[0]);
         startActivity(intent);
         finish();
     }
