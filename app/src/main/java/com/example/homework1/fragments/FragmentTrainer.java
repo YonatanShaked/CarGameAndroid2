@@ -10,14 +10,17 @@ import androidx.fragment.app.Fragment;
 import com.example.homework1.R;
 import com.example.homework1.models.Trainer;
 import com.google.android.material.textview.MaterialTextView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class FragmentTrainer extends Fragment {
-    private final Trainer trainer;
     private MaterialTextView trainer_name;
     private MaterialTextView trainer_caught;
 
-    public FragmentTrainer(Trainer trainer) {
-        this.trainer = trainer;
+    public FragmentTrainer() {
     }
 
     @Override
@@ -29,11 +32,24 @@ public class FragmentTrainer extends Fragment {
     }
 
     private void initViews() {
-        if (trainer != null) {
-            trainer_name.setText(trainer.getName());
-            String caught = getString(R.string.trainer_caught_str) + trainer.getAfekaMons();
-            trainer_caught.setText(caught);
-        }
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference trainersRef = db.getReference("trainers");
+        String userId = "Moshe";
+
+        trainersRef.orderByChild("name").equalTo(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for(DataSnapshot data: dataSnapshot.getChildren()){
+                    Trainer trainer = data.getValue(Trainer.class);
+                    trainer_name.setText(trainer.getName());
+                    String caught = getString(R.string.trainer_caught_str) + trainer.getAfekaMons();
+                    trainer_caught.setText(caught);
+                }
+            }
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     private void findViews(View view) {
