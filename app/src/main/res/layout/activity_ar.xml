@@ -33,6 +33,7 @@
       android:layout_alignParentTop="true"
       android:layout_margin="25dp"
       android:src="@drawable/common_full_open_on_phone"
-      android:background="@android:color/transparent"/>
+      android:background="@android:color/transparent"
+      android:importantForAccessibility="no" />
 
 </RelativeLayout>
