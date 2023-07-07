@@ -37,7 +37,7 @@ public class LoginActivity extends AppCompatActivity {
 
     private void moveToMainActivity(FirebaseUser user) {
         Intent intent = new Intent(this, GameMenuActivity.class);
-        intent.putExtra("username", user.getDisplayName());
+        intent.putExtra("username", user.getEmail());
         startActivity(intent);
         finish();
     }
