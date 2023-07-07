@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.media.Image;
+import android.media.MediaPlayer;
 import android.opengl.GLES30;
 import android.opengl.GLSurfaceView;
 import android.opengl.Matrix;
@@ -122,6 +123,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     private final float[] viewInverseMatrix = new float[16];
     private final float[] worldLightDirection = {0.0f, 0.0f, 0.0f, 0.0f};
     private final float[] viewLightDirection = new float[4]; // view x world light direction
+    private MediaPlayer mediaPlayer;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -148,6 +150,11 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             popup.inflate(R.menu.settings_menu);
             popup.show();
         });
+
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.battle);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(70, 70);
+        mediaPlayer.start();
     }
 
     protected boolean settingsMenuClick(MenuItem item) {
@@ -168,12 +175,15 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             session = null;
         }
 
+        mediaPlayer.stop();
+        mediaPlayer.release();
         super.onDestroy();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+        mediaPlayer.start();
 
         if (session == null) {
             Exception exception = null;
@@ -233,6 +243,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     @Override
     public void onPause() {
         super.onPause();
+        mediaPlayer.pause();
         if (session != null) {
             displayRotationHelper.onPause();
             surfaceView.onPause();
