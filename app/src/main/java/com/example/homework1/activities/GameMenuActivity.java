@@ -154,13 +154,6 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
 
     private void startLocationUpdates() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         fusedLocationProviderClient.requestLocationUpdates(locationRequest, locationCallback, Looper.getMainLooper());
@@ -172,13 +165,6 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
 
     private void getLastLocation() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         Task<Location> locationTask = fusedLocationProviderClient.getLastLocation();
@@ -205,11 +191,9 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == LOCATION_REQUEST_CODE) {
             if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                // Permission granted
                 getLastLocation();
                 checkSettingsAndStartLocationUpdates();
             } else {
-                //Permission not granted
                 showLocationAlert();
             }
         }
@@ -219,10 +203,7 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         new AlertDialog.Builder(this)
                 .setTitle("Device location")
                 .setMessage("Application must use device location.\nPlease allow it.\n")
-                // Specifying a listener allows you to take an action before dismissing the dialog.
-                // The dialog is automatically dismissed when a dialog button is clicked.
                 .setPositiveButton("Exit", (dialog, which) -> finish())
-                // A null listener allows the button to dismiss the dialog and take no further action.
                 .setIcon(android.R.drawable.ic_dialog_alert)
                 .show();
     }
