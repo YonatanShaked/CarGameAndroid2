@@ -280,11 +280,11 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             final VertexBuffer[] pointCloudVertexBuffers = {pointCloudVertexBuffer};
             pointCloudMesh = new Mesh(render, Mesh.PrimitiveMode.POINTS, null, pointCloudVertexBuffers);
 
-            virtualObjectAlbedoTexture = Texture.createFromAsset(render, "models/pawn_albedo.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
-            virtualObjectAlbedoInstantPlacementTexture = Texture.createFromAsset(render, "models/pawn_albedo_instant_placement.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
-            Texture virtualObjectPbrTexture = Texture.createFromAsset(render, "models/pawn_roughness_metallic_ao.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.LINEAR);
+            virtualObjectAlbedoTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+            virtualObjectAlbedoInstantPlacementTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+            Texture virtualObjectPbrTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.LINEAR);
 
-            virtualObjectMesh = Mesh.createFromAsset(render, "models/pawn.obj");
+            virtualObjectMesh = Mesh.createFromAsset(render, "models/monke.obj");
             virtualObjectShader = Shader.createFromAssets(render, "shaders/environmental_hdr.vert", "shaders/environmental_hdr.frag",
                     new HashMap<String, String>() {
                         {
