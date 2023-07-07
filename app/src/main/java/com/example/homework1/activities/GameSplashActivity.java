@@ -1,7 +1,5 @@
 package com.example.homework1.activities;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
@@ -11,8 +9,10 @@ import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ImageView;
 
-import com.example.homework1.interfaces.Constants;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.homework1.R;
+import com.example.homework1.interfaces.Constants;
 
 @SuppressLint("CustomSplashScreen")
 public class GameSplashActivity extends AppCompatActivity implements Constants {
@@ -66,7 +66,7 @@ public class GameSplashActivity extends AppCompatActivity implements Constants {
     }
 
     private void animationDone() {
-        Intent intent = new Intent(this, GameMenuActivity.class);
+        Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
     }
