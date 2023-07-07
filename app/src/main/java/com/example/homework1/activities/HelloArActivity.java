@@ -22,6 +22,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homework1.R;
+import com.example.homework1.interfaces.Constants;
 import com.example.homework1.models.WrappedAnchor;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
@@ -154,13 +155,13 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
         mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.battle);
         mediaPlayer.setLooping(true);
-        mediaPlayer.setVolume(70, 70);
+        mediaPlayer.setVolume(50, 50);
         mediaPlayer.start();
 
         mediaPlayerBall = MediaPlayer.create(getApplicationContext(), R.raw.ball);
         mediaPlayerBall.setVolume(100, 100);
         mediaPlayerBall.setOnCompletionListener(mediaPlayer -> {
-            final int random = new Random().nextInt(2);
+            final int random = new Random().nextInt(Constants.CATCH_CHANCE);
             if (random == 0) {
                 Intent intent = new Intent(this, GameMenuActivity.class);
                 intent.putExtra("caught", "monke");
