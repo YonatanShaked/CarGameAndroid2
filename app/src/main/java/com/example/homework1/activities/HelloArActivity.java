@@ -124,6 +124,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     private final float[] worldLightDirection = {0.0f, 0.0f, 0.0f, 0.0f};
     private final float[] viewLightDirection = new float[4]; // view x world light direction
     private MediaPlayer mediaPlayer;
+    private MediaPlayer mediaPlayerBall;
 
     @SuppressLint("ClickableViewAccessibility")
     @Override
@@ -155,6 +156,18 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
         mediaPlayer.setLooping(true);
         mediaPlayer.setVolume(70, 70);
         mediaPlayer.start();
+
+        mediaPlayerBall = MediaPlayer.create(getApplicationContext(), R.raw.ball);
+        mediaPlayerBall.setVolume(100, 100);
+        mediaPlayerBall.setOnCompletionListener(mediaPlayer -> {
+            final int random = new Random().nextInt(2);
+            if (random == 0) {
+                Intent intent = new Intent(this, GameMenuActivity.class);
+                intent.putExtra("caught", "monke");
+                startActivity(intent);
+                finish();
+            }
+        });
     }
 
     protected boolean settingsMenuClick(MenuItem item) {
@@ -177,6 +190,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
 
         mediaPlayer.stop();
         mediaPlayer.release();
+        mediaPlayerBall.stop();
+        mediaPlayerBall.release();
         super.onDestroy();
     }
 
@@ -494,17 +509,14 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
                         wrappedAnchors.remove(0);
                     }
 
-                    if (wrappedAnchors.size() > 0) {
-                        final int random = new Random().nextInt(8);
-                        if (random == 1) {
-                            Intent intent = new Intent(this, GameMenuActivity.class);
-                            intent.putExtra("caught", "monke");
-                            startActivity(intent);
-                            finish();
-                        }
+                    if (wrappedAnchors.size() > 0 && !mediaPlayerBall.isPlaying()) {
+                        wrappedAnchors.add(new WrappedAnchor(hit.createAnchor(), trackable));
+                        mediaPlayerBall.start();
+                    }
+                    else {
+                        wrappedAnchors.add(new WrappedAnchor(hit.createAnchor(), trackable));
                     }
 
-                    wrappedAnchors.add(new WrappedAnchor(hit.createAnchor(), trackable));
                     this.runOnUiThread(this::showOcclusionDialogIfNeeded);
                     break;
                 }
