@@ -50,9 +50,6 @@
             android:name=".activities.TopTenActivity"
             android:exported="false"/>
         <activity
-            android:name=".activities.GameOverActivity"
-            android:exported="false"/>
-        <activity
             android:name=".activities.HelloArActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false"
