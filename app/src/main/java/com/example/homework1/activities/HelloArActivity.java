@@ -36,6 +36,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.example.homework1.R;
+import com.example.homework1.models.WrappedAnchor;
 import com.google.ar.core.Anchor;
 import com.google.ar.core.ArCoreApk;
 import com.google.ar.core.Camera;
@@ -838,27 +839,5 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
       config.setInstantPlacementMode(InstantPlacementMode.DISABLED);
     }
     session.configure(config);
-  }
-}
-
-/**
- * Associates an Anchor with the trackable it was attached to. This is used to be able to check
- * whether or not an Anchor originally was attached to an {@link InstantPlacementPoint}.
- */
-class WrappedAnchor {
-  private final Anchor anchor;
-  private final Trackable trackable;
-
-  public WrappedAnchor(Anchor anchor, Trackable trackable) {
-    this.anchor = anchor;
-    this.trackable = trackable;
-  }
-
-  public Anchor getAnchor() {
-    return anchor;
-  }
-
-  public Trackable getTrackable() {
-    return trackable;
   }
 }
