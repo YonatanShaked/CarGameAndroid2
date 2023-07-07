@@ -8,6 +8,8 @@ import com.example.homework1.R;
 import com.example.homework1.fragments.FragmentMap;
 import com.example.homework1.fragments.FragmentTrainer;
 import com.example.homework1.models.Trainer;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class TopTenActivity extends AppCompatActivity {
     private Trainer trainer;
@@ -17,9 +19,14 @@ public class TopTenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
 
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference trainersRef = db.getReference("trainers");
+
         trainer = new Trainer();
-        trainer.setName("Moshe");
-        trainer.setAfekaMons(3);
+        trainer.setName("theproguy12");
+        trainer.setAfekaMons(10);
+
+        trainersRef.child(trainer.getName()).setValue(trainer);
 
         initViews();
 
