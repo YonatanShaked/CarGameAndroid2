@@ -60,10 +60,17 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         MaterialButton menu_BTN_light = findViewById(R.id.menu_BTN_light);
         MaterialButton menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
         menu_BTN_accelerometer.setOnClickListener(v -> startGame("ACC"));
-        menu_BTN_light.setOnClickListener(v -> startGame("LIGHT"));
+        menu_BTN_light.setOnClickListener(v -> startAR());
 
         menu_BTN_topTen.setOnClickListener(v -> openTopTenActivity(GameMenuActivity.this));
 
+    }
+
+    private void startAR()
+    {
+        Intent myIntent = new Intent(this, HelloArActivity.class);
+        startActivity(myIntent);
+        finish();
     }
 
     private void startGame(String sensor) {
