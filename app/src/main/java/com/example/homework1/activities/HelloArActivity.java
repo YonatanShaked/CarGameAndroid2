@@ -2,6 +2,7 @@ package com.example.homework1.activities;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.res.Resources;
 import android.media.Image;
 import android.opengl.GLES30;
@@ -71,6 +72,7 @@ import java.nio.ByteBuffer;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Random;
 
 public class HelloArActivity extends AppCompatActivity implements SampleRender.Renderer {
     private static final float[] sphericalHarmonicFactors = {0.282095f, -0.325735f, 0.325735f, -0.325735f, 0.273137f, -0.273137f, 0.078848f, -0.273137f, 0.136569f};
@@ -433,7 +435,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             Matrix.multiplyMM(modelViewMatrix, 0, viewMatrix, 0, modelMatrix, 0);
             Matrix.multiplyMM(modelViewProjectionMatrix, 0, projectionMatrix, 0, modelViewMatrix, 0);
 
-            if (count == 0)
+            if (count == 0) // AfekaMon
             {
                 virtualObjectShader.setMat4("u_ModelView", modelViewMatrix);
                 virtualObjectShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix);
@@ -445,8 +447,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
                 }
 
                 render.draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer);
-            }
-            else
+            } else // AfekaBall
             {
                 virtualObjectAfekaBallShader.setMat4("u_ModelView", modelViewMatrix);
                 virtualObjectAfekaBallShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix);
@@ -480,6 +481,16 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
                     if (wrappedAnchors.size() >= 20) {
                         wrappedAnchors.get(0).getAnchor().detach();
                         wrappedAnchors.remove(0);
+                    }
+
+                    if (wrappedAnchors.size() > 0) {
+                        final int random = new Random().nextInt(8);
+                        if (random == 1) {
+                            Intent intent = new Intent(this, GameMenuActivity.class);
+                            intent.putExtra("caught", "monke");
+                            startActivity(intent);
+                            finish();
+                        }
                     }
 
                     wrappedAnchors.add(new WrappedAnchor(hit.createAnchor(), trackable));
