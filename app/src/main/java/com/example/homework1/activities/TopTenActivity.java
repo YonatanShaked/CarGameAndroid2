@@ -29,7 +29,7 @@ public class TopTenActivity extends AppCompatActivity {
         FragmentTrainer fragmentTrainer = new FragmentTrainer(trainer);
         getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragmentTrainer).commit();
 
-        FragmentMap fragmentMap = new FragmentMap(null);
+        FragmentMap fragmentMap = new FragmentMap();
         getSupportFragmentManager().beginTransaction().replace(R.id.topTen_LAY_map, fragmentMap).commit();
     }
 
