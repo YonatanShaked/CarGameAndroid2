@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.content.IntentSender;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.os.Looper;
 import android.util.Log;
@@ -32,6 +33,7 @@ import com.google.android.material.button.MaterialButton;
 
 public class GameMenuActivity extends AppCompatActivity implements Constants {
     private Location theLocation;
+    private MediaPlayer mediaPlayer;
 
     FusedLocationProviderClient fusedLocationProviderClient;
     LocationRequest locationRequest;
@@ -47,6 +49,11 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_menu);
+
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.menu);
+        mediaPlayer.setLooping(true);
+        mediaPlayer.setVolume(100, 100);
+        mediaPlayer.start();
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -67,6 +74,8 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
 
     private void startAR()
     {
+        mediaPlayer.stop();
+        mediaPlayer.release();
         Log.d("MENU", "startAR: " + theLocation);
         Intent myIntent = new Intent(this, HelloArActivity.class);
         startActivity(myIntent);
@@ -74,6 +83,8 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
     }
 
     private void openTopTenActivity(Activity activity) {
+        mediaPlayer.stop();
+        mediaPlayer.release();
         Intent myIntent = new Intent(activity, TopTenActivity.class);
         startActivity(myIntent);
     }
@@ -93,22 +104,28 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
     @Override
     protected void onResume() {
         super.onResume();
+        mediaPlayer.start();
     }
 
     @Override
     protected void onPause() {
         super.onPause();
+        mediaPlayer.pause();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         stopLocationUpdates();
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        mediaPlayer.stop();
+        mediaPlayer.release();
     }
 
     private void checkSettingsAndStartLocationUpdates() {

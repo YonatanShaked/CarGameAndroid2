@@ -3,6 +3,7 @@ package com.example.homework1.activities;
 import android.animation.Animator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.os.Bundle;
 import android.util.DisplayMetrics;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.example.homework1.interfaces.Constants;
 @SuppressLint("CustomSplashScreen")
 public class GameSplashActivity extends AppCompatActivity implements Constants {
     private ImageView splash_IMG_logo;
+    private MediaPlayer mediaPlayer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +28,12 @@ public class GameSplashActivity extends AppCompatActivity implements Constants {
         findViews();
         splash_IMG_logo.setVisibility(View.INVISIBLE);
         showCarMoving(splash_IMG_logo);
+
+
+        mediaPlayer = MediaPlayer.create(getApplicationContext(), R.raw.intro);
+        mediaPlayer.seekTo(1000 * 9);
+        mediaPlayer.setVolume(100, 100);
+        mediaPlayer.start();
     }
 
     private void showCarMoving(final View v) {
@@ -66,6 +74,8 @@ public class GameSplashActivity extends AppCompatActivity implements Constants {
     }
 
     private void animationDone() {
+        mediaPlayer.stop();
+        mediaPlayer.release();
         Intent intent = new Intent(this, LoginActivity.class);
         startActivity(intent);
         finish();
