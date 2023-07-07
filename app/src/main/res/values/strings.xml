@@ -1,6 +1,8 @@
 <resources>
     <string name="app_name">CarGameHW2</string>
     <string name="main_menu_msg">Car Game Homework#2</string>
+    <string name="trainer_name_str">Trainer</string>
+    <string name="trainer_caught_str">Caught: </string>
     <string name="toast_msg">Crash!</string>
     <string name="accelerometer">Accelerometer</string>
     <string name="light">Button</string>

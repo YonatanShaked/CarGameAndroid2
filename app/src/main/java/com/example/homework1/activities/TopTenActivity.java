@@ -4,22 +4,26 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.homework1.interfaces.CallBackMap;
-import com.example.homework1.fragments.FragmentList;
-import com.example.homework1.fragments.FragmentMap;
-import com.example.homework1.models.TopTen;
 import com.example.homework1.R;
+import com.example.homework1.fragments.FragmentMap;
+import com.example.homework1.fragments.FragmentTrainer;
+import com.example.homework1.models.TopTen;
+import com.example.homework1.models.Trainer;
 import com.example.homework1.utils.SP;
 import com.google.gson.Gson;
 
 public class TopTenActivity extends AppCompatActivity {
-    private FragmentMap fragmentMap;
     private TopTen topTen;
+    private Trainer trainer;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_top_ten);
+
+        trainer = new Trainer();
+        trainer.setName("Moshe");
+        trainer.setAfekaMons(3);
 
         topTen = null;
         String ttJson = SP.getInstance().getString(SP.KEY_TOP_TEN, "NA");
@@ -32,20 +36,12 @@ public class TopTenActivity extends AppCompatActivity {
     }
 
     private void initViews() {
-        FragmentList fragmentList = new FragmentList(this, topTen);
-        fragmentList.setCallBackTop(callBackTop);
-        getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragmentList).commit();
+        FragmentTrainer fragmentTrainer = new FragmentTrainer(trainer);
+        getSupportFragmentManager().beginTransaction().add(R.id.topTen_LAY_list, fragmentTrainer).commit();
 
-        fragmentMap = new FragmentMap(topTen);
+        FragmentMap fragmentMap = new FragmentMap(topTen);
         getSupportFragmentManager().beginTransaction().replace(R.id.topTen_LAY_map, fragmentMap).commit();
     }
-
-    private final CallBackMap callBackTop = new CallBackMap() {
-        @Override
-        public void zoomToMarker(double latitude, double longitude) {
-            fragmentMap.zoomToMarker(latitude, longitude);
-        }
-    };
 
     @Override
     protected void onStart() {
