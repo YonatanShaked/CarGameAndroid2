@@ -102,9 +102,13 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     private Shader pointCloudShader;
     private long lastPointCloudTimestamp = 0;
     private Mesh virtualObjectMesh;
+    private Mesh virtualAfekaBallMesh;
     private Shader virtualObjectShader;
+    private Shader virtualObjectAfekaBallShader;
     private Texture virtualObjectAlbedoTexture;
+    private Texture virtualObjectAlbedoAfekaBallTexture;
     private Texture virtualObjectAlbedoInstantPlacementTexture;
+    private Texture virtualObjectAlbedoInstantPlacementAfekaBallTexture;
     private final List<WrappedAnchor> wrappedAnchors = new ArrayList<>();
     private SpecularCubemapFilter cubemapFilter;
     private final float[] modelMatrix = new float[16];
@@ -281,18 +285,35 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             pointCloudMesh = new Mesh(render, Mesh.PrimitiveMode.POINTS, null, pointCloudVertexBuffers);
 
             virtualObjectAlbedoTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
-            virtualObjectAlbedoInstantPlacementTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+            virtualObjectAlbedoAfekaBallTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+
+            virtualObjectAlbedoInstantPlacementTexture = Texture.createFromAsset(render, "models/afekaBall.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+            virtualObjectAlbedoInstantPlacementAfekaBallTexture = Texture.createFromAsset(render, "models/afekaBall.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.SRGB);
+
             Texture virtualObjectPbrTexture = Texture.createFromAsset(render, "models/monke.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.LINEAR);
+            Texture virtualObjectPbrAfekaBallTexture = Texture.createFromAsset(render, "models/afekaBall.png", Texture.WrapMode.CLAMP_TO_EDGE, Texture.ColorFormat.LINEAR);
 
             virtualObjectMesh = Mesh.createFromAsset(render, "models/monke.obj");
+            virtualAfekaBallMesh = Mesh.createFromAsset(render, "models/afekaBall.obj");
+
             virtualObjectShader = Shader.createFromAssets(render, "shaders/environmental_hdr.vert", "shaders/environmental_hdr.frag",
-                    new HashMap<String, String>() {
-                        {
-                            put("NUMBER_OF_MIPMAP_LEVELS", Integer.toString(cubemapFilter.getNumberOfMipmapLevels()));
-                        }
-                    }).setTexture("u_AlbedoTexture", virtualObjectAlbedoTexture)
+                            new HashMap<String, String>() {
+                                {
+                                    put("NUMBER_OF_MIPMAP_LEVELS", Integer.toString(cubemapFilter.getNumberOfMipmapLevels()));
+                                }
+                            }).setTexture("u_AlbedoTexture", virtualObjectAlbedoTexture)
                     .setTexture("u_RoughnessMetallicAmbientOcclusionTexture", virtualObjectPbrTexture)
                     .setTexture("u_Cubemap", cubemapFilter.getFilteredCubemapTexture()).setTexture("u_DfgTexture", dfgTexture);
+
+            virtualObjectAfekaBallShader = Shader.createFromAssets(render, "shaders/environmental_hdr.vert", "shaders/environmental_hdr.frag",
+                            new HashMap<String, String>() {
+                                {
+                                    put("NUMBER_OF_MIPMAP_LEVELS", Integer.toString(cubemapFilter.getNumberOfMipmapLevels()));
+                                }
+                            }).setTexture("u_AlbedoTexture", virtualObjectAlbedoAfekaBallTexture)
+                    .setTexture("u_RoughnessMetallicAmbientOcclusionTexture", virtualObjectPbrAfekaBallTexture)
+                    .setTexture("u_Cubemap", cubemapFilter.getFilteredCubemapTexture()).setTexture("u_DfgTexture", dfgTexture);
+
         } catch (IOException e) {
             Log.e(TAG, "Failed to read a required asset file", e);
             messageSnackbarHelper.showError(this, "Failed to read a required asset file: " + e);
@@ -399,6 +420,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
         updateLightEstimation(frame.getLightEstimate(), viewMatrix);
 
         render.clear(virtualSceneFramebuffer, 0f, 0f, 0f, 0f);
+        int count = 0;
         for (WrappedAnchor wrappedAnchor : wrappedAnchors) {
             Anchor anchor = wrappedAnchor.getAnchor();
             Trackable trackable = wrappedAnchor.getTrackable();
@@ -411,16 +433,33 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             Matrix.multiplyMM(modelViewMatrix, 0, viewMatrix, 0, modelMatrix, 0);
             Matrix.multiplyMM(modelViewProjectionMatrix, 0, projectionMatrix, 0, modelViewMatrix, 0);
 
-            virtualObjectShader.setMat4("u_ModelView", modelViewMatrix);
-            virtualObjectShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix);
+            if (count == 0)
+            {
+                virtualObjectShader.setMat4("u_ModelView", modelViewMatrix);
+                virtualObjectShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix);
 
-            if (trackable instanceof InstantPlacementPoint && ((InstantPlacementPoint) trackable).getTrackingMethod() == InstantPlacementPoint.TrackingMethod.SCREENSPACE_WITH_APPROXIMATE_DISTANCE) {
-                virtualObjectShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoInstantPlacementTexture);
-            } else {
-                virtualObjectShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoTexture);
+                if (trackable instanceof InstantPlacementPoint && ((InstantPlacementPoint) trackable).getTrackingMethod() == InstantPlacementPoint.TrackingMethod.SCREENSPACE_WITH_APPROXIMATE_DISTANCE) {
+                    virtualObjectShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoInstantPlacementTexture);
+                } else {
+                    virtualObjectShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoTexture);
+                }
+
+                render.draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer);
             }
+            else
+            {
+                virtualObjectAfekaBallShader.setMat4("u_ModelView", modelViewMatrix);
+                virtualObjectAfekaBallShader.setMat4("u_ModelViewProjection", modelViewProjectionMatrix);
 
-            render.draw(virtualObjectMesh, virtualObjectShader, virtualSceneFramebuffer);
+                if (trackable instanceof InstantPlacementPoint && ((InstantPlacementPoint) trackable).getTrackingMethod() == InstantPlacementPoint.TrackingMethod.SCREENSPACE_WITH_APPROXIMATE_DISTANCE) {
+                    virtualObjectAfekaBallShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoInstantPlacementAfekaBallTexture);
+                } else {
+                    virtualObjectAfekaBallShader.setTexture("u_AlbedoTexture", virtualObjectAlbedoAfekaBallTexture);
+                }
+
+                render.draw(virtualAfekaBallMesh, virtualObjectAfekaBallShader, virtualSceneFramebuffer);
+            }
+            count++;
         }
 
         backgroundRenderer.drawVirtualScene(render, virtualSceneFramebuffer, Z_NEAR, Z_FAR);
@@ -501,12 +540,15 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
     private void updateLightEstimation(LightEstimate lightEstimate, float[] viewMatrix) {
         if (lightEstimate.getState() != LightEstimate.State.VALID) {
             virtualObjectShader.setBool("u_LightEstimateIsValid", false);
+            virtualObjectAfekaBallShader.setBool("u_LightEstimateIsValid", false);
             return;
         }
         virtualObjectShader.setBool("u_LightEstimateIsValid", true);
+        virtualObjectAfekaBallShader.setBool("u_LightEstimateIsValid", true);
 
         Matrix.invertM(viewInverseMatrix, 0, viewMatrix, 0);
         virtualObjectShader.setMat4("u_ViewInverse", viewInverseMatrix);
+        virtualObjectAfekaBallShader.setMat4("u_ViewInverse", viewInverseMatrix);
 
         updateMainLight(lightEstimate.getEnvironmentalHdrMainLightDirection(), lightEstimate.getEnvironmentalHdrMainLightIntensity(), viewMatrix);
         updateSphericalHarmonicsCoefficients(lightEstimate.getEnvironmentalHdrAmbientSphericalHarmonics());
@@ -519,7 +561,9 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
         worldLightDirection[2] = direction[2];
         Matrix.multiplyMV(viewLightDirection, 0, viewMatrix, 0, worldLightDirection, 0);
         virtualObjectShader.setVec4("u_ViewLightDirection", viewLightDirection);
+        virtualObjectAfekaBallShader.setVec4("u_ViewLightDirection", viewLightDirection);
         virtualObjectShader.setVec3("u_LightIntensity", intensity);
+        virtualObjectAfekaBallShader.setVec3("u_LightIntensity", intensity);
     }
 
     private void updateSphericalHarmonicsCoefficients(float[] coefficients) {
@@ -531,6 +575,7 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
             sphericalHarmonicsCoefficients[i] = coefficients[i] * sphericalHarmonicFactors[i / 3];
         }
         virtualObjectShader.setVec3Array("u_SphericalHarmonicsCoefficients", sphericalHarmonicsCoefficients);
+        virtualObjectAfekaBallShader.setVec3Array("u_SphericalHarmonicsCoefficients", sphericalHarmonicsCoefficients);
     }
 
     private void configureSession() {
