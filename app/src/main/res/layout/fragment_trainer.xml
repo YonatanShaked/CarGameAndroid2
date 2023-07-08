@@ -4,24 +4,23 @@
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <TextView
-        android:id="@+id/trainer_title"
+    <ImageView
+        android:id="@+id/IMG_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:text="@string/trainer_name_str"
-        android:textSize="30sp"
-        android:textColor="#004D40"
-        android:textStyle="bold"
+        android:layout_marginTop="10dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/trainer"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no" />
 
     <TextView
         android:id="@+id/trainer_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="150dp"
         android:text="@string/trainer_name_str"
         android:textSize="18sp"
         android:textColor="#004D40"
@@ -34,7 +33,7 @@
         android:id="@+id/trainer_caught"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="150dp"
+        android:layout_marginTop="180dp"
         android:text="@string/trainer_caught_str"
         android:textSize="18sp"
         android:textColor="#004D40"
