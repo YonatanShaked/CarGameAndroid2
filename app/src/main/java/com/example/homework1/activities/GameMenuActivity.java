@@ -80,14 +80,11 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         locationRequest.setFastestInterval(2000);
         locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
 
-        MaterialButton menu_BTN_accelerometer = findViewById(R.id.menu_BTN_accelerometer);
         MaterialButton menu_BTN_light = findViewById(R.id.menu_BTN_light);
         MaterialButton menu_BTN_topTen = findViewById(R.id.menu_BTN_topTen);
-        menu_BTN_accelerometer.setOnClickListener(v -> startAR());
+
         menu_BTN_light.setOnClickListener(v -> startAR());
-
         menu_BTN_topTen.setOnClickListener(v -> openTopTenActivity(GameMenuActivity.this));
-
     }
 
     private void startAR()
