@@ -18,7 +18,6 @@ public class TopTenActivity extends AppCompatActivity {
         // trainersRef.child(trainer.getName()).setValue(trainer);
 
         initViews();
-
     }
 
     private void initViews() {
@@ -47,7 +46,6 @@ public class TopTenActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-
     }
 
     @Override
