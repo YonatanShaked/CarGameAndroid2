@@ -7,43 +7,33 @@
     android:background="@drawable/ic_launcher_background"
     tools:context=".activities.GameMenuActivity">
 
-    <TextView
-        android:id="@+id/menu_TXT_StarGame"
+    <ImageView
+        android:id="@+id/IMG_logo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:text="@string/main_menu_msg"
-        android:textColor="#004D40"
-        android:textStyle="bold"
+        android:layout_marginTop="50dp"
+        android:layout_centerInParent="true"
+        android:src="@drawable/afekamon_go"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.google.android.material.button.MaterialButton
-        android:id="@+id/menu_BTN_accelerometer"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
-        android:text="@string/accelerometer"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu_TXT_StarGame" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAccessibility="no" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menu_BTN_light"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="50dp"
         android:text="@string/light"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/menu_BTN_accelerometer" />
+        app:layout_constraintTop_toBottomOf="@+id/IMG_logo" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/menu_BTN_topTen"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="34dp"
+        android:layout_marginTop="50dp"
         android:text="@string/top_ten"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
