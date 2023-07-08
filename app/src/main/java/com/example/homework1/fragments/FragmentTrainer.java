@@ -37,7 +37,7 @@ public class FragmentTrainer extends Fragment {
     private void initViews() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference trainersRef = db.getReference("trainers");
-        
+
         trainersRef.orderByChild("name").equalTo(trainerName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {

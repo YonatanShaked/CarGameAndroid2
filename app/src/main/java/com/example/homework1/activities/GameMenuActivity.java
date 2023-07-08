@@ -19,6 +19,7 @@ import androidx.core.content.ContextCompat;
 
 import com.example.homework1.R;
 import com.example.homework1.interfaces.Constants;
+import com.example.homework1.models.Trainer;
 import com.google.android.gms.common.api.ResolvableApiException;
 import com.google.android.gms.location.FusedLocationProviderClient;
 import com.google.android.gms.location.LocationCallback;
@@ -30,8 +31,16 @@ import com.google.android.gms.location.LocationSettingsResponse;
 import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.button.MaterialButton;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class GameMenuActivity extends AppCompatActivity implements Constants {
+
+    private String trainerName;
+
     private Location theLocation;
     private MediaPlayer mediaPlayer;
 
@@ -54,6 +63,30 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         mediaPlayer.setLooping(true);
         mediaPlayer.setVolume(100, 100);
         mediaPlayer.start();
+
+        trainerName = getIntent().getExtras().getString("trainer");
+
+        if (getIntent().getExtras().getBoolean("caught"))
+        {
+            FirebaseDatabase db = FirebaseDatabase.getInstance();
+            DatabaseReference trainersRef = db.getReference("trainers");
+
+            trainersRef.orderByChild("name").equalTo(trainerName).addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    for(DataSnapshot data: dataSnapshot.getChildren()){
+                        Trainer trainer = data.getValue(Trainer.class);
+                        if (trainer != null) {
+                            trainer.setAfekaMons(trainer.getAfekaMons() + 1);
+                            trainersRef.child(trainer.getName()).setValue(trainer);
+                        }
+                    }
+                }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+                }
+            });
+        }
 
         fusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
 
@@ -86,7 +119,7 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         mediaPlayer.stop();
         mediaPlayer.release();
         Intent myIntent = new Intent(activity, TopTenActivity.class);
-        myIntent.putExtra("trainer", getIntent().getExtras().getString("trainer"));
+        myIntent.putExtra("trainer", trainerName);
         startActivity(myIntent);
     }
 
