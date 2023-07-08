@@ -63,7 +63,8 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         mediaPlayer.setVolume(100, 100);
         mediaPlayer.start();
 
-        trainerName = getIntent().getExtras().getString("trainer");
+        if (getIntent().getExtras().getString("trainer") != null)
+            trainerName = getIntent().getExtras().getString("trainer");
 
         if (getIntent().getExtras().getBoolean("caught"))
         {
