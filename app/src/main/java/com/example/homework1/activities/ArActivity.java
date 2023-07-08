@@ -76,9 +76,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Random;
 
-public class HelloArActivity extends AppCompatActivity implements SampleRender.Renderer {
+public class ArActivity extends AppCompatActivity implements SampleRender.Renderer {
     private static final float[] sphericalHarmonicFactors = {0.282095f, -0.325735f, 0.325735f, -0.325735f, 0.273137f, -0.273137f, 0.078848f, -0.273137f, 0.136569f};
-    private static final String TAG = HelloArActivity.class.getSimpleName();
+    private static final String TAG = ArActivity.class.getSimpleName();
     private static final String SEARCHING_PLANE_MESSAGE = "Searching for surfaces...";
     private static final String WAITING_FOR_TAP_MESSAGE = "Tap on a surface to place an object.";
     private static final float Z_NEAR = 0.1f;
@@ -147,8 +147,8 @@ public class HelloArActivity extends AppCompatActivity implements SampleRender.R
         instantPlacementSettings.onCreate(this);
         ImageButton settingsButton = findViewById(R.id.settings_button);
         settingsButton.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(HelloArActivity.this, v);
-            popup.setOnMenuItemClickListener(HelloArActivity.this::settingsMenuClick);
+            PopupMenu popup = new PopupMenu(ArActivity.this, v);
+            popup.setOnMenuItemClickListener(ArActivity.this::settingsMenuClick);
             popup.inflate(R.menu.settings_menu);
             popup.show();
         });

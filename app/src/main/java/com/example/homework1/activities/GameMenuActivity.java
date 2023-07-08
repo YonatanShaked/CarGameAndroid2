@@ -77,7 +77,7 @@ public class GameMenuActivity extends AppCompatActivity implements Constants {
         mediaPlayer.stop();
         mediaPlayer.release();
         Log.d("MENU", "startAR: " + theLocation);
-        Intent myIntent = new Intent(this, HelloArActivity.class);
+        Intent myIntent = new Intent(this, ArActivity.class);
         startActivity(myIntent);
         finish();
     }

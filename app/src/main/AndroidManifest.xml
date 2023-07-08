@@ -50,7 +50,7 @@
             android:name=".activities.TopTenActivity"
             android:exported="false"/>
         <activity
-            android:name=".activities.HelloArActivity"
+            android:name=".activities.ArActivity"
             android:configChanges="orientation|screenSize"
             android:exported="false"
             android:screenOrientation="locked"/>
