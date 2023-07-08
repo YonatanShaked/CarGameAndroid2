@@ -23,4 +23,12 @@
         android:layout_margin="24dp"
         android:background="#45454545"/>
 
+    <ImageButton
+        android:id="@+id/return_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="25dp"
+        android:src="@drawable/common_full_open_on_phone"
+        android:importantForAccessibility="no" />
+
 </LinearLayout>

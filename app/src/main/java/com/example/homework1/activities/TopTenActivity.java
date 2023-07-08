@@ -1,6 +1,8 @@
 package com.example.homework1.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.ImageButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -23,6 +25,14 @@ public class TopTenActivity extends AppCompatActivity {
 
         FragmentMap fragmentMap = new FragmentMap();
         getSupportFragmentManager().beginTransaction().replace(R.id.topTen_LAY_map, fragmentMap).commit();
+
+        ImageButton returnBtn = findViewById(R.id.return_button);
+        returnBtn.setOnClickListener(v -> {
+            Intent myIntent = new Intent(this, GameMenuActivity.class);
+            myIntent.putExtra("caught", false);
+            startActivity(myIntent);
+            finish();
+        });
     }
 
     @Override
