@@ -164,7 +164,7 @@ public class ArActivity extends AppCompatActivity implements SampleRender.Render
             final int random = new Random().nextInt(Constants.CATCH_CHANCE);
             if (random == 0) {
                 Intent intent = new Intent(this, GameMenuActivity.class);
-                intent.putExtra("caught", "monke");
+                intent.putExtra("caught", true);
                 startActivity(intent);
                 finish();
             }

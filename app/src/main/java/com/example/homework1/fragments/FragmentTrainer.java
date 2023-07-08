@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import com.example.homework1.R;
@@ -17,7 +18,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 public class FragmentTrainer extends Fragment {
-    private String trainerName;
+    private final String trainerName;
     private MaterialTextView trainer_name;
     private MaterialTextView trainer_caught;
 
@@ -36,19 +37,21 @@ public class FragmentTrainer extends Fragment {
     private void initViews() {
         FirebaseDatabase db = FirebaseDatabase.getInstance();
         DatabaseReference trainersRef = db.getReference("trainers");
-
+        
         trainersRef.orderByChild("name").equalTo(trainerName).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 for(DataSnapshot data: dataSnapshot.getChildren()){
                     Trainer trainer = data.getValue(Trainer.class);
-                    trainer_name.setText(trainer.getName());
-                    String caught = getString(R.string.trainer_caught_str) + trainer.getAfekaMons();
-                    trainer_caught.setText(caught);
+                    if (trainer != null) {
+                        trainer_name.setText(trainer.getName());
+                        String caught = getString(R.string.trainer_caught_str) + trainer.getAfekaMons();
+                        trainer_caught.setText(caught);
+                    }
                 }
             }
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onCancelled(@NonNull DatabaseError databaseError) {
             }
         });
     }
